@@ -20,3 +20,5 @@ As I complete each step, I'll add the configuration, screenshots, problems I ran
 Proxmox and the lab network are running. OPNsense provides the lab gateway, and the Debian desktop is connected to Wazuh on an Ubuntu server. I completed a controlled sudo authentication-failure test and reviewed the resulting alerts. Windows and Active Directory are still planned.
 
 [Read the first investigation](investigations/01-sudo-authentication.md).
+
+My second investigation covers file integrity monitoring. Creation, modification, and deletion alerts are verified. [Read the completed investigation](investigations/02-file-integrity.md).

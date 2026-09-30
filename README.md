@@ -10,13 +10,17 @@ I'm using Proxmox as the foundation of the lab so I can create multiple virtual 
 
 This repository will document the project as I build it, including the setup process, problems I run into, what I learn, and eventually some SOC investigation exercises.
 
-**Current Status:** Proxmox, OPNsense, and Wazuh are running. My Debian endpoint is connected, and I completed my first authentication-failure investigation.
+**Current Status:** Proxmox, OPNsense, and Wazuh are running. My Debian endpoint is connected, and I completed authentication-failure and file-integrity investigations.
 
-## Completed Investigation
+## Completed Investigations
 
 [Investigation 01: Failed sudo authentication in Wazuh](docs/investigations/01-sudo-authentication.md)
 
 I generated a failed sudo authentication on my Debian lab desktop, found the alerts in Wazuh, and checked the original log to confirm what caused them. The write-up includes screenshots, troubleshooting notes, and my conclusion.
+
+[Investigation 02: File integrity monitoring in Wazuh](docs/investigations/02-file-integrity.md)
+
+I created, modified, and deleted a test file on my Debian endpoint, then reviewed the alerts, content difference, and file attributes. The write-up includes nine evidence screenshots.
 
 ---
 
@@ -187,7 +191,7 @@ For each investigation, I plan to document what triggered the alert, what logs I
 ### SOC Practice
 
 - [x] [Investigation #1: Failed sudo authentication](docs/investigations/01-sudo-authentication.md)
-- [ ] Investigation #2
+- [x] [Investigation #2: File integrity monitoring](docs/investigations/02-file-integrity.md)
 - [ ] Investigation #3
 - [ ] Investigation #4
 - [ ] Investigation #5
