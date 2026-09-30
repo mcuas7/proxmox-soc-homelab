@@ -5,9 +5,9 @@
 - **Computer:** HP EliteDesk 800 G6 Mini
 - **Memory:** 32 GB RAM
 - **Storage:** 1 TB SSD
-- **Planned operating system:** Proxmox VE
+- **Operating system:** Proxmox VE
 
-This computer will host the virtual machines for my SOC home lab. I haven't installed Proxmox yet, so I'll update this page with the actual configuration as I build it.
+Proxmox is installed and currently hosts OPNsense, a Debian management desktop, and an Ubuntu Wazuh server.
 
 ## Existing server
 

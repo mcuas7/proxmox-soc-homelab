@@ -10,7 +10,13 @@ I'm using Proxmox as the foundation of the lab so I can create multiple virtual 
 
 This repository will document the project as I build it, including the setup process, problems I run into, what I learn, and eventually some SOC investigation exercises.
 
-**Current Status:** Work in Progress
+**Current Status:** Proxmox, OPNsense, and Wazuh are running. My Debian endpoint is connected, and I completed my first authentication-failure investigation.
+
+## Completed Investigation
+
+[Investigation 01: Failed sudo authentication in Wazuh](docs/investigations/01-sudo-authentication.md)
+
+I generated a failed sudo authentication on my Debian lab desktop, found the alerts in Wazuh, and checked the original log to confirm what caused them. The write-up includes screenshots, troubleshooting notes, and my conclusion.
 
 ---
 
@@ -37,7 +43,7 @@ I also want to become more comfortable explaining how I approached an investigat
 
 ## Lab Hardware
 
-The lab will run on an HP EliteDesk Mini with:
+The lab runs on an HP EliteDesk Mini with:
 
 - 32 GB RAM
 - 1 TB SSD
@@ -151,10 +157,10 @@ For each investigation, I plan to document what triggered the alert, what logs I
 
 ### Proxmox Setup
 
-- [ ] Install Proxmox
-- [ ] Configure networking
-- [ ] Configure storage
-- [ ] Create the lab network
+- [x] Install Proxmox
+- [x] Configure networking
+- [x] Configure storage
+- [x] Create the lab network
 
 ### Basic Services
 
@@ -171,16 +177,16 @@ For each investigation, I plan to document what triggered the alert, what logs I
 
 ### SOC Environment
 
-- [ ] Install Wazuh
-- [ ] Install Wazuh agents
+- [x] Install Wazuh
+- [x] Install the first Wazuh agent (Debian lab desktop)
 - [ ] Install Sysmon
 - [ ] Collect Windows logs
-- [ ] Collect Linux logs
-- [ ] Verify alerts are reaching the SIEM
+- [x] Collect Linux logs
+- [x] Verify alerts are reaching the SIEM
 
 ### SOC Practice
 
-- [ ] Investigation #1
+- [x] [Investigation #1: Failed sudo authentication](docs/investigations/01-sudo-authentication.md)
 - [ ] Investigation #2
 - [ ] Investigation #3
 - [ ] Investigation #4
