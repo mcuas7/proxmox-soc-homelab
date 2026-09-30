@@ -22,3 +22,5 @@ Proxmox and the lab network are running. OPNsense provides the lab gateway, and 
 [Read the first investigation](investigations/01-sudo-authentication.md).
 
 My second investigation covers file integrity monitoring. Creation, modification, and deletion alerts are verified. [Read the completed investigation](investigations/02-file-integrity.md).
+
+I completed my third investigation by comparing multiple sudo authentication-failure alerts with terminal evidence and documenting why the controlled test could be closed without escalation. [Read Investigation 03](investigations/03-failed-sudo-attempts.md).

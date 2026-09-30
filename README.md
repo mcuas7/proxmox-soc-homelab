@@ -22,6 +22,10 @@ I generated a failed sudo authentication on my Debian lab desktop, found the ale
 
 I created, modified, and deleted a test file on my Debian endpoint, then reviewed the alerts, content difference, and file attributes. The write-up includes nine evidence screenshots.
 
+[Investigation 03: Multiple failed sudo authentication attempts](docs/investigations/03-failed-sudo-attempts.md)
+
+I deliberately entered three incorrect sudo passwords, connected the PAM and sudo logs, and reviewed the level-10 alert. The write-up includes six screenshots and my closing SOC ticket.
+
 ---
 
 ## Why I'm Building This
@@ -192,7 +196,7 @@ For each investigation, I plan to document what triggered the alert, what logs I
 
 - [x] [Investigation #1: Failed sudo authentication](docs/investigations/01-sudo-authentication.md)
 - [x] [Investigation #2: File integrity monitoring](docs/investigations/02-file-integrity.md)
-- [ ] Investigation #3
+- [x] [Investigation #3: Multiple failed sudo authentication attempts](docs/investigations/03-failed-sudo-attempts.md)
 - [ ] Investigation #4
 - [ ] Investigation #5
 
