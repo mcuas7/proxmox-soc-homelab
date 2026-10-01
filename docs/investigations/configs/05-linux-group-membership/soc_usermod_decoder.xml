@@ -1,0 +1,6 @@
+<decoder name="soc-usermod-group-add">
+  <program_name type="pcre2">^usermod$</program_name>
+  <prematch type="pcre2">^add '[^']+' to group '</prematch>
+  <regex type="pcre2">^add '([^']+)' to group '([^']+)'$</regex>
+  <order>dstuser,lab_group</order>
+</decoder>

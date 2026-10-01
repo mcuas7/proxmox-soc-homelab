@@ -26,3 +26,5 @@ My second investigation covers file integrity monitoring. Creation, modification
 I completed my third investigation by comparing multiple sudo authentication-failure alerts with terminal evidence and documenting why the controlled test could be closed without escalation. [Read Investigation 03](investigations/03-failed-sudo-attempts.md).
 
 I completed Investigation 04 by creating a temporary Linux account, reviewing the user and group alerts, and verifying account cleanup. [Read the investigation](investigations/04-linux-account-creation.md).
+
+I completed Investigation 05 by investigating a Linux group membership change, adding and validating a custom Wazuh detection, testing file access, and verifying cleanup. [Read the investigation](investigations/05-linux-group-membership.md).

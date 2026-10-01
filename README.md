@@ -10,7 +10,7 @@ I'm using Proxmox as the foundation of the lab so I can create multiple virtual 
 
 This repository will document the project as I build it, including the setup process, problems I run into, what I learn, and eventually some SOC investigation exercises.
 
-**Current Status:** Proxmox, OPNsense, and Wazuh are running. My Debian endpoint is connected, and I have completed four investigations covering authentication failures, file integrity, and Linux account creation.
+**Current Status:** Proxmox, OPNsense, and Wazuh are running. My Debian endpoint is connected, and I have completed five investigations covering authentication, file integrity, account creation, and group membership, including a custom Wazuh detection.
 
 ## Completed Investigations
 
@@ -29,6 +29,10 @@ I deliberately entered three incorrect sudo passwords, connected the PAM and sud
 [Investigation 04: Linux account creation](docs/investigations/04-linux-account-creation.md)
 
 I created a temporary Linux account, connected the sudo command to the user and group alerts, and verified cleanup. The write-up includes eleven screenshots and my closing assessment.
+
+[Investigation 05: Linux group membership and custom detection](docs/investigations/05-linux-group-membership.md)
+
+I investigated a group membership change, found a decoding gap, and built a custom Wazuh decoder and rule. I verified a live alert and demonstrated the group’s file-access impact. The write-up includes nineteen screenshots, the detection files, and my closing assessment.
 
 ---
 
@@ -202,7 +206,7 @@ For each investigation, I plan to document what triggered the alert, what logs I
 - [x] [Investigation #2: File integrity monitoring](docs/investigations/02-file-integrity.md)
 - [x] [Investigation #3: Multiple failed sudo authentication attempts](docs/investigations/03-failed-sudo-attempts.md)
 - [x] [Investigation #4: Linux account creation](docs/investigations/04-linux-account-creation.md)
-- [ ] Investigation #5
+- [x] [Investigation #5: Linux group membership and custom detection](docs/investigations/05-linux-group-membership.md)
 
 ---
 

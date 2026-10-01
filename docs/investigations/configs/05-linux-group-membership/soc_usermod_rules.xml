@@ -1,0 +1,7 @@
+<group name="local,linux_group_changes,">
+  <rule id="100105" level="5">
+    <decoded_as>soc-usermod-group-add</decoded_as>
+    <field name="lab_group" type="pcre2">.+</field>
+    <description>Linux group membership added: $(dstuser) added to $(lab_group).</description>
+  </rule>
+</group>
