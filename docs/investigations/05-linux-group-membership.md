@@ -160,7 +160,7 @@ I removed the temporary file with `sudo rm -- "$lab_file"`; the following `ls` r
 
 ![Verified temporary file, user, and group cleanup](images/05-linux-group-membership/evidence-19-cleanup.png)
 
-The custom decoder and rule are retained on the manager for future monitoring. All nineteen supplied screenshots are preserved.
+The custom decoder and rule are retained on the manager for future monitoring. All twenty-one supplied screenshots are preserved.
 
 ## My closing ticket
 
@@ -181,10 +181,26 @@ The repository includes the configuration used in this test:
 
 These copies match the configuration shown in the screenshots. The decoder extracts the affected account as `dstuser` and the group as `lab_group`; it does not identify the administrator who initiated the change. For that, I correlated the sudo log.
 
-The rule matches the regular `usermod` group-add message for any matching username and group, not just this test pair. It excludes the shadow-group companion message. This lab verified one positive sample and a live event; it did not exhaustively test negative samples, removals, other tools, or direct edits to group files. Level 5 is the severity I selected for the lab, not proof of the change's business impact.
+The rule matches the regular `usermod` group-add message for any matching username and group, not just this test pair. It excludes the shadow-group companion message. This lab verified the original positive sample, a live event, an alternate-user positive sample, and two negative samples. It did not exhaustively test removals, other tools, or direct edits to group files. Level 5 is the severity I selected for the lab, not proof of the change's business impact.
 
 ## What I learned
 
 A change can happen and appear in local logs without producing the specific SIEM alert I expect. I learned to check collection, decoding, rule matching, and dashboard delivery separately. I also practiced correcting command mistakes, distinguishing server settings from endpoint settings, and testing actual access rather than assuming what a group name allows.
 
 The terminal uses EDT, while raw Wazuh event times show a consistent four-hour difference without an explicit timezone suffix. I retained the displayed times and did not treat the offset as an event delay.
+
+## Follow-up: positive and negative detection tests
+
+I used `wazuh-logtest` to check three simulated records. The sample timestamp `Oct 01 16:30:00` is test input, not evidence that these accounts existed or these changes happened. No accounts or memberships were created by these tests.
+
+| Sample | Expected result | Observed result | Assessment |
+| --- | --- | --- | --- |
+| `usermod` adds `test-analyst` to `test-readers` | Rule 100105; alternate names extracted | Decoder `soc-usermod-group-add`; correct `dstuser` and `lab_group`; rule 100105, level 5 | Passed |
+| `usermod` adds the same user to the shadow group | No rule 100105 | No decoder matched; no rule 100105 shown | Passed |
+| `example-app` emits the regular group-add text | No rule 100105 | No decoder matched; no rule 100105 shown | Passed |
+
+![Positive test using alternate account and group names](images/05-linux-group-membership/evidence-20-alternate-user-positive-test.png)
+
+![Shadow-group and unrelated-program negative tests](images/05-linux-group-membership/evidence-21-negative-tests.png)
+
+The positive test shows the extraction is not limited to the original lab names. The two negative samples confirm that the tested shadow-group companion message and an unrelated program do not trigger the custom rule. These are scoped checks, not proof of zero false positives or complete detection coverage. The log-test message “Alert to be generated” describes the simulated rule result; live dashboard delivery was established separately by the earlier real event.

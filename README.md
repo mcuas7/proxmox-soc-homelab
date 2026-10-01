@@ -32,7 +32,7 @@ I created a temporary Linux account, connected the sudo command to the user and 
 
 [Investigation 05: Linux group membership and custom detection](docs/investigations/05-linux-group-membership.md)
 
-I investigated a group membership change, found a decoding gap, and built a custom Wazuh decoder and rule. I verified a live alert and demonstrated the group’s file-access impact. The write-up includes nineteen screenshots, the detection files, and my closing assessment.
+I investigated a group membership change, found a decoding gap, and built a custom Wazuh decoder and rule. I verified a live alert and demonstrated the group’s file-access impact. The write-up includes twenty-one screenshots, the detection files, positive and negative validation tests, and my closing assessment.
 
 ---
 
