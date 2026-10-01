@@ -10,7 +10,7 @@ I'm using Proxmox as the foundation of the lab so I can create multiple virtual 
 
 This repository will document the project as I build it, including the setup process, problems I run into, what I learn, and eventually some SOC investigation exercises.
 
-**Current Status:** Proxmox, OPNsense, and Wazuh are running. My Debian endpoint is connected, and I completed authentication-failure and file-integrity investigations.
+**Current Status:** Proxmox, OPNsense, and Wazuh are running. My Debian endpoint is connected, and I have completed four investigations covering authentication failures, file integrity, and Linux account creation.
 
 ## Completed Investigations
 
@@ -25,6 +25,10 @@ I created, modified, and deleted a test file on my Debian endpoint, then reviewe
 [Investigation 03: Multiple failed sudo authentication attempts](docs/investigations/03-failed-sudo-attempts.md)
 
 I deliberately entered three incorrect sudo passwords, connected the PAM and sudo logs, and reviewed the level-10 alert. The write-up includes six screenshots and my closing SOC ticket.
+
+[Investigation 04: Linux account creation](docs/investigations/04-linux-account-creation.md)
+
+I created a temporary Linux account, connected the sudo command to the user and group alerts, and verified cleanup. The write-up includes eleven screenshots and my closing assessment.
 
 ---
 
@@ -197,7 +201,7 @@ For each investigation, I plan to document what triggered the alert, what logs I
 - [x] [Investigation #1: Failed sudo authentication](docs/investigations/01-sudo-authentication.md)
 - [x] [Investigation #2: File integrity monitoring](docs/investigations/02-file-integrity.md)
 - [x] [Investigation #3: Multiple failed sudo authentication attempts](docs/investigations/03-failed-sudo-attempts.md)
-- [ ] Investigation #4
+- [x] [Investigation #4: Linux account creation](docs/investigations/04-linux-account-creation.md)
 - [ ] Investigation #5
 
 ---
