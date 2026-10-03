@@ -10,7 +10,7 @@ I'm using Proxmox as the foundation of the lab so I can create multiple virtual 
 
 This repository will document the project as I build it, including the setup process, problems I run into, what I learn, and eventually some SOC investigation exercises.
 
-**Current Status:** Proxmox, OPNsense, and Wazuh are running. My Debian endpoint is connected, and I have completed five investigations covering authentication, file integrity, account creation, and group membership, including a custom Wazuh detection.
+**Current Status:** Proxmox, OPNsense, and Wazuh are running. My Debian and Windows endpoints are connected, Windows Security events are reaching Wazuh, and I have completed six investigations covering authentication, file integrity, account creation, and group membership.
 
 ## Completed Investigations
 
@@ -33,6 +33,16 @@ I created a temporary Linux account, connected the sudo command to the user and 
 [Investigation 05: Linux group membership and custom detection](docs/investigations/05-linux-group-membership.md)
 
 I investigated a group membership change, found a decoding gap, and built a custom Wazuh decoder and rule. I verified a live alert and demonstrated the group’s file-access impact. The write-up includes twenty-one screenshots, the detection files, positive and negative validation tests, and my closing assessment.
+
+
+[Investigation 06: Windows failed authentication](docs/investigations/06-windows-failed-logon.md)
+
+I compared a controlled runas failure with Windows event 4625 and Wazuh alerts. I reviewed distinct event records and kept an unexplained Edge-associated failure separate. The write-up includes eight screenshots and my closing assessment.
+
+[Windows endpoint setup](docs/setup/windows-endpoint.md)
+
+I installed Windows 11 Enterprise Evaluation, configured VirtIO tools, enrolled the agent, and verified Windows Security event collection. The setup notes include fourteen screenshots.
+
 
 ---
 
@@ -188,7 +198,7 @@ For each investigation, I plan to document what triggered the alert, what logs I
 - [ ] Install Windows Server
 - [ ] Configure Active Directory
 - [ ] Create test users
-- [ ] Install Windows 11
+- [x] Install Windows 11
 - [ ] Join Windows 11 to the domain
 
 ### SOC Environment
@@ -196,7 +206,7 @@ For each investigation, I plan to document what triggered the alert, what logs I
 - [x] Install Wazuh
 - [x] Install the first Wazuh agent (Debian lab desktop)
 - [ ] Install Sysmon
-- [ ] Collect Windows logs
+- [x] Collect Windows logs
 - [x] Collect Linux logs
 - [x] Verify alerts are reaching the SIEM
 
@@ -207,6 +217,7 @@ For each investigation, I plan to document what triggered the alert, what logs I
 - [x] [Investigation #3: Multiple failed sudo authentication attempts](docs/investigations/03-failed-sudo-attempts.md)
 - [x] [Investigation #4: Linux account creation](docs/investigations/04-linux-account-creation.md)
 - [x] [Investigation #5: Linux group membership and custom detection](docs/investigations/05-linux-group-membership.md)
+- [x] [Investigation #6: Windows failed authentication](docs/investigations/06-windows-failed-logon.md)
 
 ---
 

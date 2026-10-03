@@ -17,7 +17,7 @@ As I complete each step, I'll add the configuration, screenshots, problems I ran
 
 ## Current status
 
-Proxmox and the lab network are running. OPNsense provides the lab gateway, and the Debian desktop is connected to Wazuh on an Ubuntu server. I completed a controlled sudo authentication-failure test and reviewed the resulting alerts. Windows and Active Directory are still planned.
+Proxmox and the lab network are running. OPNsense provides the lab gateway, and the Debian desktop is connected to Wazuh on an Ubuntu server. I completed a controlled sudo authentication-failure test and reviewed the resulting alerts. Windows 11 is now connected to Wazuh and Windows Security event collection is verified. Windows Server and Active Directory are still planned.
 
 [Read the first investigation](investigations/01-sudo-authentication.md).
 
@@ -30,3 +30,8 @@ I completed Investigation 04 by creating a temporary Linux account, reviewing th
 I completed Investigation 05 by investigating a Linux group membership change, adding and validating a custom Wazuh detection, testing file access, and verifying cleanup. [Read the investigation](investigations/05-linux-group-membership.md).
 
 I also validated the custom group-membership detection with an alternate-user positive sample and two negative samples. All three tests behaved as expected.
+
+
+I completed Investigation 06 by comparing controlled Windows authentication failures with event 4625 and Wazuh rule 60122, checking distinct event records, and documenting the limits of the correlation. [Read the investigation](investigations/06-windows-failed-logon.md).
+
+[Windows endpoint setup and evidence](setup/windows-endpoint.md).
