@@ -1,16 +1,64 @@
 # Proxmox SOC Home Lab
 
 ## About This Project
+# Proxmox SOC Home Lab
 
-I currently work in IT support and I'm working toward transitioning into a cybersecurity/SOC Analyst role.
+## About This Project
 
-I created this home lab to get more hands-on experience with the tools and day-to-day tasks that a SOC Analyst may work with, such as reviewing alerts, analyzing logs, working with Windows security events, and investigating suspicious activity.
+I am an IT support professional building hands-on security operations experience through an isolated home lab.
 
-I'm using Proxmox as the foundation of the lab so I can create multiple virtual machines and build a small enterprise-style environment without needing several physical computers.
+Using Proxmox VE, OPNsense, and Wazuh, I collect and investigate security events from Debian and Windows endpoints. I have completed seven investigations covering authentication failures, file integrity, account creation and deletion, and Linux group membership.
 
-This repository documents the setup, troubleshooting, and investigations I complete as I build the lab. Each investigation includes the evidence I reviewed and how I reached my conclusion.
+This repository contains setup notes, investigation evidence, troubleshooting, a custom Wazuh decoder and rule, and documented conclusions. The project is ongoing; completed work and planned additions are listed separately below.
 
-**Current Status:** Proxmox, OPNsense, and Wazuh are running. My Debian and Windows endpoints are connected, Windows Security events are reaching Wazuh, and I have completed seven investigations covering authentication, file integrity, account creation, and group membership.
+## Start Here
+
+These three investigations show my approach to detection troubleshooting, evidence analysis, and investigation documentation:
+
+| Investigation | What it demonstrates |
+| --- | --- |
+| [05 — Linux group membership and custom detection](docs/investigations/05-linux-group-membership.md) | Identifying a decoding gap, creating a custom Wazuh decoder and rule, validating positive and negative samples, confirming live alert delivery, and testing group-based file access. |
+| [06 — Windows failed authentication](docs/investigations/06-windows-failed-logon.md) | Analyzing event 4625, failure codes, calling process, and event id while while keeping unexplained activity separate from a controlled test. |
+| [07 — Windows account creation and deletion](docs/investigations/07-windows-account-creation.md) | Identifying the difference between acting and affected accounts, correlation of incidents 4720 and 4726 with warnings, timeline generation, and account deletion verification.. |
+
+## Current Architecture
+
+The diagram shows the lab components and log flow. It does not represent exact network interfaces, routing, or firewall rules.
+
+```mermaid
+flowchart TB
+    P["Proxmox VE — virtualization host"]
+    O["OPNsense — lab firewall"]
+    W["Wazuh — security monitoring"]
+    D["Debian endpoint — Wazuh agent"]
+    E["Windows 11 endpoint — Wazuh agent"]
+
+    P -->|Hosts| O
+    P -->|Hosts| W
+    P -->|Hosts| D
+    P -->|Hosts| E
+    D -->|Linux logs and file integrity events| W
+    E -->|Windows Security events| W
+```
+
+## Completed and Running
+
+- Proxmox VE with configured networking, storage, and lab virtual machines.
+- OPNsense lab firewall.
+- Wazuh with connected Debian and Windows 11 agents.
+- Verified Linux and Windows Security event collection.
+- Seven completed investigations with evidence and closing assessments.
+- Custom Wazuh decoder and rule for the tested Linux usermod group-add message format.
+
+## Planned Additions
+
+The following are planned and are not yet demonstrated as completed work in this repository:
+
+- Windows Server and Active Directory.
+- Windows endpoint domain enrollment.
+- Sysmon installation and process-event investigations.
+- AdGuard Home and Uptime Kuma.
+- Additional PowerShell and network activity investigations.
 
 ## Completed Investigations
 
