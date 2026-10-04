@@ -1,9 +1,6 @@
 # Proxmox SOC Home Lab
 
 ## About This Project
-# Proxmox SOC Home Lab
-
-## About This Project
 
 I am an IT support professional building hands-on security operations experience through an isolated home lab.
 
