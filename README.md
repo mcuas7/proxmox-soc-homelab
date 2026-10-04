@@ -8,7 +8,7 @@ I created this home lab to get more hands-on experience with the tools and day-t
 
 I'm using Proxmox as the foundation of the lab so I can create multiple virtual machines and build a small enterprise-style environment without needing several physical computers.
 
-This repository will document the project as I build it, including the setup process, problems I run into, what I learn, and eventually some SOC investigation exercises.
+This repository documents the setup, troubleshooting, and investigations I complete as I build the lab. Each investigation includes the evidence I reviewed and how I reached my conclusion.
 
 **Current Status:** Proxmox, OPNsense, and Wazuh are running. My Debian and Windows endpoints are connected, Windows Security events are reaching Wazuh, and I have completed seven investigations covering authentication, file integrity, account creation, and group membership.
 
@@ -34,7 +34,6 @@ I created a temporary Linux account, connected the sudo command to the user and 
 
 I investigated a group membership change, found a decoding gap, and built a custom Wazuh decoder and rule. I verified a live alert and demonstrated the group’s file-access impact. The write-up includes twenty-one screenshots, the detection files, positive and negative validation tests, and my closing assessment.
 
-
 [Investigation 06: Windows failed authentication](docs/investigations/06-windows-failed-logon.md)
 
 I compared a controlled runas failure with Windows event 4625 and Wazuh alerts. I reviewed distinct event records and kept an unexplained Edge-associated failure separate. The write-up includes eight screenshots and my closing assessment.
@@ -46,7 +45,6 @@ I reviewed creation and deletion events for a temporary Windows account, disting
 [Windows endpoint setup](docs/setup/windows-endpoint.md)
 
 I installed Windows 11 Enterprise Evaluation, configured VirtIO tools, enrolled the agent, and verified Windows Security event collection. The setup notes include fourteen screenshots.
-
 
 ---
 
@@ -83,103 +81,48 @@ I already have a separate Debian server running Nextcloud, so I'm keeping the SO
 
 ---
 
-## Planned Lab
+## Current Lab
 
-My initial plan is to build the following environment:
+The lab now has four VMs on Proxmox. OPNsense provides the lab gateway, and Wazuh receives events from the Debian and Windows endpoints.
 
-    Proxmox VE
-        |
-        +-- AdGuard Home
-        |
-        +-- Uptime Kuma
-        |
-        +-- Windows Server
-        |      |
-        |      +-- Active Directory
-        |      +-- DNS
-        |
-        +-- Windows 11 Workstation
-        |
-        +-- Linux Server
-        |
-        +-- Wazuh
-               |
-               +-- Windows logs
-               +-- Linux logs
-               +-- Security alerts
+| VM | Role | Current state |
+|---|---|---|
+| `opnsense-fw` | Lab firewall and gateway | Running |
+| `lab-desktop` | Debian endpoint | Wazuh agent enrolled; Linux investigations completed |
+| `soc-wazuh` | Ubuntu server with Wazuh manager, indexer, and dashboard | Receives Linux and Windows events |
+| `lab-windows` | Windows 11 Enterprise Evaluation endpoint | Wazuh agent enrolled; Windows Security events verified |
 
-The design may change as I learn more and continue building the lab.
+The endpoints use the lab bridge `vmbr1`. Windows Server, Active Directory, domain joining, and Sysmon are still planned. [Windows setup evidence](docs/setup/windows-endpoint.md) and [hardware details](docs/Hardware.md) document the current build.
 
 ---
 
 ## Tools and Technologies
 
-Some of the technologies I plan to work with are:
+**In use:** Proxmox VE, OPNsense, Debian, Ubuntu, Windows 11 Enterprise Evaluation, Wazuh, PowerShell, and Linux command-line tools. I also built and validated a custom Wazuh decoder and rule for a Linux group-membership message.
 
-- Proxmox VE
-- Windows Server
-- Active Directory
-- Windows 11
-- Linux
-- Wazuh
-- Sysmon
-- PowerShell
-- AdGuard Home
-- Uptime Kuma
-- MITRE ATT&CK
-
-I'm expecting this list to grow as the project develops.
+**Still planned:** Windows Server, Active Directory, Sysmon, and additional network and endpoint investigations. AdGuard Home and Uptime Kuma remain optional service projects.
 
 ---
 
-## SOC Skills I Want to Practice
+## SOC Skills I'm Practicing
 
-One of my main goals is to understand what actually happens after a security alert appears.
+For each exercise, I generate controlled activity, review the alert and original event, compare it with endpoint output, and write a disposition supported by the evidence.
 
-Instead of just generating alerts, I want to practice the full investigation process:
+I'm practicing how to:
 
-    Alert
-      |
-      v
-    Review the alert
-      |
-      v
-    Gather information
-      |
-      v
-    Check logs and endpoint activity
-      |
-      v
-    Build a timeline
-      |
-      v
-    Determine what happened
-      |
-      v
-    Decide if the activity is benign or suspicious
-      |
-      v
-    Document the investigation
-
-I also want to practice writing investigation notes that another analyst could understand.
+- Identify the acting account and the affected user, group, or file.
+- Compare timestamps, process names, SIDs, and event record IDs.
+- Check whether an alert matches the test or needs a separate investigation.
+- Explain why activity is authorized and verify cleanup.
+- Record uncertainty instead of filling gaps with assumptions.
 
 ---
 
-## Planned Investigations
+## Next Investigations
 
-Once the environment is running, I plan to create several safe scenarios inside the lab and investigate the resulting activity.
+My next exercise is Windows local Administrators group membership. I'll examine who granted membership, which account received it, and how removal is verified. Investigation 08 is pending.
 
-Some of the scenarios I want to work through include:
-
-- Multiple failed login attempts
-- Suspicious PowerShell activity
-- User account or group membership changes
-- Unusual network connections
-- Endpoint security alerts
-- File changes
-- Authentication activity
-
-For each investigation, I plan to document what triggered the alert, what logs I checked, what evidence I found, and how I reached my conclusion.
+After that, I plan to investigate PowerShell activity, unusual network connections, and endpoint security alerts. Active Directory exercises will follow the Windows Server build.
 
 ---
 
@@ -201,16 +144,17 @@ For each investigation, I plan to document what triggered the alert, what logs I
 
 - [ ] Install Windows Server
 - [ ] Configure Active Directory
-- [ ] Create test users
+- [ ] Create Active Directory test users
 - [x] Install Windows 11
 - [ ] Join Windows 11 to the domain
 
 ### SOC Environment
 
 - [x] Install Wazuh
-- [x] Install the first Wazuh agent (Debian lab desktop)
+- [x] Enroll the Debian endpoint in Wazuh
+- [x] Enroll the Windows endpoint in Wazuh
 - [ ] Install Sysmon
-- [x] Collect Windows logs
+- [x] Verify Windows Security event collection
 - [x] Collect Linux logs
 - [x] Verify alerts are reaching the SIEM
 
@@ -228,24 +172,24 @@ For each investigation, I plan to document what triggered the alert, what logs I
 
 ## What I'm Learning
 
-I'll update this section throughout the project with things that I learn, problems I encounter, and how I fixed them.
+The biggest change has been learning to explain what the evidence supports, rather than stopping at “an alert appeared.”
 
-I expect troubleshooting to be a big part of this project, so I want to document the mistakes and fixes instead of only showing the finished environment.
+- **An alert is a starting point.** I compare its description with the original event and endpoint output. A high severity level does not prove compromise.
+- **The acting account and affected account are different roles.** In Windows account events, I check Subject and Target separately. An administrator username identifies a security account; it does not prove the action was approved.
+- **Authorization needs context.** I can close my controlled tests because I planned and performed them. In a real environment, I would need to verify the activity against an approved request or with the responsible owner.
+- **Alert counts can mislead.** My Windows failed-login test produced distinct event records close together. I checked their record IDs and processes without assuming each alert represented a separate manual attempt.
+- **Permissions and actual access are separate questions.** In the Linux group exercise, I tested file access while the user was a member and confirmed a fresh read was denied after removal. That did not prove existing sessions had lost access.
+- **Detection gaps need testing.** When Wazuh did not decode a Linux group-membership message, I added a decoder and rule, verified a live alert, and ran positive and negative samples. I documented the detection's limited scope.
+- **Cleanup needs evidence.** I check that temporary accounts or files are absent after removal and compare that result with deletion events where available.
+- **Troubleshooting belongs in the write-up.** A missing colon, the wrong time range, or an account that already exists can change the result. I keep those screenshots and explain the correction.
+
+Expected lab activity can be a valid detection with a benign disposition. It is not automatically a false positive. I also kept an unexplained Edge-associated authentication failure separate from the confirmed test activity.
 
 ---
 
 ## Future Ideas
 
-Once the basic SOC environment is working, I'd like to explore:
-
-- Microsoft Sentinel
-- Microsoft Defender
-- Vulnerability scanning
-- Network segmentation
-- Detection rules
-- Threat hunting
-- Additional Windows endpoints
-- Additional Linux systems
+Once I complete more investigations in the current environment, I'd like to explore Microsoft Sentinel, Microsoft Defender, vulnerability scanning, and threat hunting. I also want to evaluate the lab's network controls and expand detection coverage as I add systems.
 
 ---
 
