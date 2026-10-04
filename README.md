@@ -10,7 +10,7 @@ I'm using Proxmox as the foundation of the lab so I can create multiple virtual 
 
 This repository will document the project as I build it, including the setup process, problems I run into, what I learn, and eventually some SOC investigation exercises.
 
-**Current Status:** Proxmox, OPNsense, and Wazuh are running. My Debian and Windows endpoints are connected, Windows Security events are reaching Wazuh, and I have completed six investigations covering authentication, file integrity, account creation, and group membership.
+**Current Status:** Proxmox, OPNsense, and Wazuh are running. My Debian and Windows endpoints are connected, Windows Security events are reaching Wazuh, and I have completed seven investigations covering authentication, file integrity, account creation, and group membership.
 
 ## Completed Investigations
 
@@ -38,6 +38,10 @@ I investigated a group membership change, found a decoding gap, and built a cust
 [Investigation 06: Windows failed authentication](docs/investigations/06-windows-failed-logon.md)
 
 I compared a controlled runas failure with Windows event 4625 and Wazuh alerts. I reviewed distinct event records and kept an unexplained Edge-associated failure separate. The write-up includes eight screenshots and my closing assessment.
+
+[Investigation 07: Windows account creation and deletion](docs/investigations/07-windows-account-creation.md)
+
+I reviewed creation and deletion events for a temporary Windows account, distinguished the acting and affected accounts, and verified cleanup. The write-up includes eight screenshots, troubleshooting, and my closing assessment.
 
 [Windows endpoint setup](docs/setup/windows-endpoint.md)
 
@@ -218,6 +222,7 @@ For each investigation, I plan to document what triggered the alert, what logs I
 - [x] [Investigation #4: Linux account creation](docs/investigations/04-linux-account-creation.md)
 - [x] [Investigation #5: Linux group membership and custom detection](docs/investigations/05-linux-group-membership.md)
 - [x] [Investigation #6: Windows failed authentication](docs/investigations/06-windows-failed-logon.md)
+- [x] [Investigation #7: Windows account creation and deletion](docs/investigations/07-windows-account-creation.md)
 
 ---
 

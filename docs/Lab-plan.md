@@ -35,3 +35,5 @@ I also validated the custom group-membership detection with an alternate-user po
 I completed Investigation 06 by comparing controlled Windows authentication failures with event 4625 and Wazuh rule 60122, checking distinct event records, and documenting the limits of the correlation. [Read the investigation](investigations/06-windows-failed-logon.md).
 
 [Windows endpoint setup and evidence](setup/windows-endpoint.md).
+
+I completed Investigation 07 by reviewing Windows account creation and deletion events, identifying the acting and affected accounts, and verifying removal with an endpoint lookup. [Read the investigation](investigations/07-windows-account-creation.md).
