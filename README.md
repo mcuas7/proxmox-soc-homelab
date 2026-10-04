@@ -183,7 +183,7 @@ The biggest change has been learning to explain what the evidence supports, rath
 - **Cleanup needs evidence.** I check that temporary accounts or files are absent after removal and compare that result with deletion events where available.
 - **Troubleshooting belongs in the write-up.** A missing colon, the wrong time range, or an account that already exists can change the result. I keep those screenshots and explain the correction.
 
-Expected lab activity can be a valid detection with a benign disposition. It is not automatically a false positive. I also kept an unexplained Edge-associated authentication failure separate from the confirmed test activity.
+Expected lab activity may serve as a legitimate detection in good faith. However, this does not necessarily mean that it constitutes a false positive. Additionally, the unexplained Edge authentication failure was isolated from the actual lab activity..
 
 ---
 
