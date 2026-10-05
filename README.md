@@ -4,7 +4,7 @@
 
 I am an IT support professional building hands-on security operations experience through an isolated home lab.
 
-Using Proxmox VE, OPNsense, and Wazuh, I collect and investigate security events from Debian and Windows endpoints. I have completed seven investigations covering authentication failures, file integrity, account creation and deletion, and Linux group membership.
+Using Proxmox VE, OPNsense, and Wazuh, I collect and investigate security events from Debian and Windows endpoints. I have completed eight investigations covering authentication failures, file integrity, account creation and deletion, and Linux group membership.
 
 This repository contains setup notes, investigation evidence, troubleshooting, a custom Wazuh decoder and rule, and documented conclusions. The project is ongoing; completed work and planned additions are listed separately below.
 
@@ -87,6 +87,10 @@ I compared a controlled runas failure with Windows event 4625 and Wazuh alerts. 
 
 I reviewed creation and deletion events for a temporary Windows account, distinguished the acting and affected accounts, and verified cleanup. The write-up includes eight screenshots, troubleshooting, and my closing assessment.
 
+[Investigation 08: Windows Administrators group membership](docs/investigations/08-windows-admin-membership.md)
+
+I added a disabled test account to Administrators, matched its SID to the addition and removal events, and verified cleanup. The write-up includes fifteen screenshots and distinguishes group membership from account creation and use of privileges.
+
 [Windows endpoint setup](docs/setup/windows-endpoint.md)
 
 I installed Windows 11 Enterprise Evaluation, configured VirtIO tools, enrolled the agent, and verified Windows Security event collection. The setup notes include fourteen screenshots.
@@ -165,7 +169,7 @@ I'm practicing how to:
 
 ## Next Investigations
 
-My next exercise is Windows local Administrators group membership. I'll examine who granted membership, which account received it, and how removal is verified. Investigation 08 is pending.
+I completed the Windows Administrators membership exercise, including SID correlation and cleanup. My next focus is process and PowerShell visibility, followed by additional endpoint and network investigations.
 
 After that, I plan to investigate PowerShell activity, unusual network connections, and endpoint security alerts. Active Directory exercises will follow the Windows Server build.
 
@@ -212,6 +216,7 @@ After that, I plan to investigate PowerShell activity, unusual network connectio
 - [x] [Investigation #5: Linux group membership and custom detection](docs/investigations/05-linux-group-membership.md)
 - [x] [Investigation #6: Windows failed authentication](docs/investigations/06-windows-failed-logon.md)
 - [x] [Investigation #7: Windows account creation and deletion](docs/investigations/07-windows-account-creation.md)
+- [x] [Investigation #8: Windows Administrators group membership](docs/investigations/08-windows-admin-membership.md)
 
 ---
 
@@ -220,6 +225,7 @@ After that, I plan to investigate PowerShell activity, unusual network connectio
 The biggest change has been learning to explain what the evidence supports, rather than stopping at “an alert appeared.”
 
 - **An alert is a starting point.** I compare its description with the original event and endpoint output. A high severity level does not prove compromise.
+- **Accounts and group membership are separate.** Creating an account, adding it to Administrators, removing its membership, and deleting it are different actions. My disabled test account held membership, but I did not demonstrate it using administrator privileges.
 - **The acting account and affected account are different roles.** In Windows account events, I check Subject and Target separately. An administrator username identifies a security account; it does not prove the action was approved.
 - **Authorization needs context.** I can close my controlled tests because I planned and performed them. In a real environment, I would need to verify the activity against an approved request or with the responsible owner.
 - **Alert counts can mislead.** My Windows failed-login test produced distinct event records close together. I checked their record IDs and processes without assuming each alert represented a separate manual attempt.

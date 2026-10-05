@@ -28,12 +28,12 @@ Proxmox hosts OPNsense, a Debian endpoint, an Ubuntu Wazuh server, and a Windows
 5. [Linux group membership and custom detection](investigations/05-linux-group-membership.md)
 6. [Windows failed authentication](investigations/06-windows-failed-logon.md)
 7. [Windows account creation and deletion](investigations/07-windows-account-creation.md)
+8. [Windows Administrators group membership](investigations/08-windows-admin-membership.md)
 
 The custom Linux detection includes a verified live alert and positive and negative validation samples. [Windows endpoint setup](setup/windows-endpoint.md) documents enrollment and event collection.
 
 ## Next steps
 
-- Complete Investigation 08: Windows local Administrators group membership.
 - Add Sysmon and practice process and PowerShell investigations.
 - Build Windows Server and Active Directory, then join the Windows endpoint to the domain.
 
