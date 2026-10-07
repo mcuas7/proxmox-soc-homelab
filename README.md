@@ -4,7 +4,7 @@
 
 I am an IT support professional building hands-on security operations experience through an isolated home lab.
 
-Using Proxmox VE, OPNsense, and Wazuh, I collect and investigate security events from Debian and Windows endpoints. I have completed eight investigations covering authentication failures, file integrity, account creation and deletion, and Linux group membership.
+Using Proxmox VE, OPNsense, and Wazuh, I collect and investigate security events from Debian and Windows endpoints. I have completed nine investigations covering authentication failures, file integrity, account creation and deletion, Linux group membership, and Sysmon process visibility.
 
 This repository contains setup notes, investigation evidence, troubleshooting, a custom Wazuh decoder and rule, and documented conclusions. The project is ongoing; completed work and planned additions are listed separately below.
 
@@ -35,7 +35,7 @@ flowchart TB
     P -->|Hosts| D
     P -->|Hosts| E
     D -->|Linux logs and file integrity events| W
-    E -->|Windows Security events| W
+    E -->|Windows Security and Sysmon events| W
 ```
 
 ## Completed and Running
@@ -44,7 +44,7 @@ flowchart TB
 - OPNsense lab firewall.
 - Wazuh with connected Debian and Windows 11 agents.
 - Verified Linux and Windows Security event collection.
-- Seven completed investigations with evidence and closing assessments.
+- Nine completed investigations with evidence and closing assessments.
 - Custom Wazuh decoder and rule for the tested Linux usermod group-add message format.
 
 ## Planned Additions
@@ -53,7 +53,6 @@ The following are planned and are not yet demonstrated as completed work in this
 
 - Windows Server and Active Directory.
 - Windows endpoint domain enrollment.
-- Sysmon installation and process-event investigations.
 - AdGuard Home and Uptime Kuma.
 - Additional PowerShell and network activity investigations.
 
@@ -90,6 +89,10 @@ I reviewed creation and deletion events for a temporary Windows account, disting
 [Investigation 08: Windows Administrators group membership](docs/investigations/08-windows-admin-membership.md)
 
 I added a disabled test account to Administrators, matched its SID to the addition and removal events, and verified cleanup. The write-up includes fifteen screenshots and distinguishes group membership from account creation and use of privileges.
+
+[Investigation 09: Sysmon process creation and Wazuh delivery](docs/investigations/09-sysmon-process-creation.md)
+
+I traced a marked PowerShell-to-command-shell event through Sysmon and Wazuh, distinguished raw events from alerts, investigated search and timing issues, and verified cleanup. The write-up includes all twenty-four screenshots and a closing learning summary.
 
 [Windows endpoint setup](docs/setup/windows-endpoint.md)
 
@@ -139,17 +142,17 @@ The lab now has four VMs on Proxmox. OPNsense provides the lab gateway, and Wazu
 | `opnsense-fw` | Lab firewall and gateway | Running |
 | `lab-desktop` | Debian endpoint | Wazuh agent enrolled; Linux investigations completed |
 | `soc-wazuh` | Ubuntu server with Wazuh manager, indexer, and dashboard | Receives Linux and Windows events |
-| `lab-windows` | Windows 11 Enterprise Evaluation endpoint | Wazuh agent enrolled; Windows Security events verified |
+| `lab-windows` | Windows 11 Enterprise Evaluation endpoint | Wazuh agent enrolled; Windows Security and Sysmon events verified |
 
-The endpoints use the lab bridge `vmbr1`. Windows Server, Active Directory, domain joining, and Sysmon are still planned. [Windows setup evidence](docs/setup/windows-endpoint.md) and [hardware details](docs/Hardware.md) document the current build.
+The endpoints use the lab bridge `vmbr1`. Sysmon process events are verified in Wazuh. Windows Server, Active Directory, and domain joining are still planned. [Windows setup evidence](docs/setup/windows-endpoint.md) and [hardware details](docs/Hardware.md) document the current build.
 
 ---
 
 ## Tools and Technologies
 
-**In use:** Proxmox VE, OPNsense, Debian, Ubuntu, Windows 11 Enterprise Evaluation, Wazuh, PowerShell, and Linux command-line tools. I also built and validated a custom Wazuh decoder and rule for a Linux group-membership message.
+**In use:** Proxmox VE, OPNsense, Debian, Ubuntu, Windows 11 Enterprise Evaluation, Wazuh, PowerShell, Sysmon, and Linux command-line tools. I also built and validated a custom Wazuh decoder and rule for a Linux group-membership message.
 
-**Still planned:** Windows Server, Active Directory, Sysmon, and additional network and endpoint investigations. AdGuard Home and Uptime Kuma remain optional service projects.
+**Still planned:** Windows Server, Active Directory, and additional network and endpoint investigations. AdGuard Home and Uptime Kuma remain optional service projects.
 
 ---
 
@@ -169,7 +172,7 @@ I'm practicing how to:
 
 ## Next Investigations
 
-I completed the Windows Administrators membership exercise, including SID correlation and cleanup. My next focus is process and PowerShell visibility, followed by additional endpoint and network investigations.
+I completed the Sysmon process visibility investigation, including manager receipt, saved alerts, dashboard verification, and cleanup. My next focus is additional PowerShell and endpoint activity with clearly identified artifacts.
 
 After that, I plan to investigate PowerShell activity, unusual network connections, and endpoint security alerts. Active Directory exercises will follow the Windows Server build.
 
@@ -202,7 +205,7 @@ After that, I plan to investigate PowerShell activity, unusual network connectio
 - [x] Install Wazuh
 - [x] Enroll the Debian endpoint in Wazuh
 - [x] Enroll the Windows endpoint in Wazuh
-- [ ] Install Sysmon
+- [x] Install Sysmon and verify process-event delivery
 - [x] Verify Windows Security event collection
 - [x] Collect Linux logs
 - [x] Verify alerts are reaching the SIEM
@@ -217,6 +220,7 @@ After that, I plan to investigate PowerShell activity, unusual network connectio
 - [x] [Investigation #6: Windows failed authentication](docs/investigations/06-windows-failed-logon.md)
 - [x] [Investigation #7: Windows account creation and deletion](docs/investigations/07-windows-account-creation.md)
 - [x] [Investigation #8: Windows Administrators group membership](docs/investigations/08-windows-admin-membership.md)
+- [x] [Investigation #9: Sysmon process creation and Wazuh delivery](docs/investigations/09-sysmon-process-creation.md)
 
 ---
 
@@ -231,6 +235,7 @@ The biggest change has been learning to explain what the evidence supports, rath
 - **Alert counts can mislead.** My Windows failed-login test produced distinct event records close together. I checked their record IDs and processes without assuming each alert represented a separate manual attempt.
 - **Permissions and actual access are separate questions.** In the Linux group exercise, I tested file access while the user was a member and confirmed a fresh read was denied after removal. That did not prove existing sessions had lost access.
 - **Detection gaps need testing.** When Wazuh did not decode a Linux group-membership message, I added a decoder and rule, verified a live alert, and ran positive and negative samples. I documented the detection's limited scope.
+- **Collection and visibility are separate.** A running agent does not prove delivery. I trace a specific marker through raw events, saved alerts, and the dashboard, and check the actual matched rule and search window.
 - **Cleanup needs evidence.** I check that temporary accounts or files are absent after removal and compare that result with deletion events where available.
 - **Troubleshooting belongs in the write-up.** A missing colon, the wrong time range, or an account that already exists can change the result. I keep those screenshots and explain the correction.
 

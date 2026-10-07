@@ -17,7 +17,7 @@ As I complete each step, I'll add the configuration, screenshots, problems I ran
 
 ## Current status
 
-Proxmox hosts OPNsense, a Debian endpoint, an Ubuntu Wazuh server, and a Windows 11 Enterprise Evaluation endpoint. Both endpoints are enrolled in Wazuh, and Linux and Windows Security events are reaching the SIEM.
+Proxmox hosts OPNsense, a Debian endpoint, an Ubuntu Wazuh server, and a Windows 11 Enterprise Evaluation endpoint. Both endpoints are enrolled in Wazuh, and Linux, Windows Security, and tested Sysmon process events are reaching the SIEM.
 
 ## Completed investigations
 
@@ -29,12 +29,13 @@ Proxmox hosts OPNsense, a Debian endpoint, an Ubuntu Wazuh server, and a Windows
 6. [Windows failed authentication](investigations/06-windows-failed-logon.md)
 7. [Windows account creation and deletion](investigations/07-windows-account-creation.md)
 8. [Windows Administrators group membership](investigations/08-windows-admin-membership.md)
+9. [Sysmon process creation and Wazuh delivery](investigations/09-sysmon-process-creation.md)
 
 The custom Linux detection includes a verified live alert and positive and negative validation samples. [Windows endpoint setup](setup/windows-endpoint.md) documents enrollment and event collection.
 
 ## Next steps
 
-- Add Sysmon and practice process and PowerShell investigations.
+- Continue PowerShell and endpoint investigations, capturing the artifacts needed for each assessment.
 - Build Windows Server and Active Directory, then join the Windows endpoint to the domain.
 
 These steps remain pending. My focus is to explain the evidence, authorization, impact, and cleanup for each investigation before adding more tools.
