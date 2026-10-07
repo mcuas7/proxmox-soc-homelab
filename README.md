@@ -92,7 +92,7 @@ I added a disabled test account to Administrators, matched its SID to the additi
 
 [Investigation 09: Sysmon process creation and Wazuh delivery](docs/investigations/09-sysmon-process-creation.md)
 
-I traced a marked PowerShell-to-command-shell event through Sysmon and Wazuh, distinguished raw events from alerts, investigated search and timing issues, and verified cleanup. The write-up includes all twenty-four screenshots and a closing learning summary.
+I traced a marked PowerShell-to-command-shell event through Sysmon and Wazuh, distinguished raw events from alerts, investigated search and timing issues, and verified cleanup. The write-up includes all twenty-four screenshots and a “What I learned” reflection.
 
 [Windows endpoint setup](docs/setup/windows-endpoint.md)
 
